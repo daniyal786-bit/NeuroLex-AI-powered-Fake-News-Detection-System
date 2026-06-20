@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroLex AI - Cognitive Shield Against Digital Disinformation</title>
+    <link rel="stylesheet" href="/static/neurolex.css?v=4.0.4">
+   
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Mobile menu trigger (icon only — no duplicate glyphs) -->
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+        <svg class="sidebar-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span style="font-weight: bold; margin-left: 8px; font-size: 0.95rem;">Menu</span>
+    </button>
+
+    <!-- Dim overlay when drawer is open -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()" aria-hidden="true"></div>
+    
+    <!-- Theme Toggle -->
+    <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button>
+
+    <!-- Sidebar drawer -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+        <header class="sidebar-header">
+            <div class="sidebar-brand">
+                <span class="sidebar-brand-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3c-4 0-7 2.5-7 6v2c0 3.5 3 6 7 6s7-2.5 7-6V9c0-3.5-3-6-7-6z"/><path d="M8 14v2a4 4 0 008 0v-2"/></svg>
+                </span>
+                <div>
+                    <span class="sidebar-brand-name">NeuroLex</span>
+                    <span class="sidebar-brand-tag">Media literacy hub</span>
+                </div>
+            </div>
+            <button type="button" class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </header>
+
+        <div class="sidebar-scroll">
+        <div class="sidebar-section">
+            <div class="sidebar-section-head">
+                <h3 class="sidebar-title" onclick="this.closest('.sidebar-section').classList.toggle('collapsed')">
+                    <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    TUTORIALS
+                </h3>
+                <button type="button" class="sidebar-action-btn" onclick="refreshTutorials()" aria-label="Refresh tutorials">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M5 19A9 9 0 0019 5"/></svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <button type="button" class="sidebar-item" onclick="showTutorial('basics')">
+                    <span class="nav-icon nav-icon--primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/></svg></span>
+                    <span class="nav-text"><strong>Getting Started</strong><span>Master NeuroLex in 5 minutes</span></span>
+                </button>
+                <button type="button" class="sidebar-item" onclick="showTutorial('verification')">
+                    <span class="nav-icon nav-icon--success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span>
+                    <span class="nav-text"><strong>Fact Verification</strong><span>5-step verification process</span></span>
+                </button>
+                <button type="button" class="sidebar-item" onclick="showTutorial('sources')">
+                    <span class="nav-icon nav-icon--info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+                    <span class="nav-text"><strong>Source Analysis</strong><span>How to spot credible sources</span></span>
+                </button>
+                <button type="button" class="sidebar-item" onclick="showTutorial('deepfake')">
+                    <span class="nav-icon nav-icon--warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+                    <span class="nav-text"><strong>Deepfake Detection</strong><span>Identify manipulated media</span></span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-head">
+                <h3 class="sidebar-title" onclick="this.closest('.sidebar-section').classList.toggle('collapsed')">
+                    <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    MISINFORMATION TOOLKIT
+                </h3>
+                <!-- Export toolkit button removed -->
+            </div>
+            <div class="sidebar-card sidebar-card--danger">
+                <h4 class="sidebar-card-title">Critical Red Flags</h4>
+                <ul class="sidebar-list">
+                    <li>ALL CAPS headlines</li>
+                    <li>Anonymous sources</li>
+                    <li>Emotional manipulation</li>
+                    <li>No publication date</li>
+                    <li>Poor grammar or spelling</li>
+                </ul>
+            </div>
+            <div class="sidebar-card sidebar-card--success">
+                <h4 class="sidebar-card-title">Verification Checklist</h4>
+                <ul class="sidebar-list">
+                    <li>Check 3+ independent sources</li>
+                    <li>Verify author credentials</li>
+                    <li>Look for citations</li>
+                    <li>Reverse image search</li>
+                    <li>Check domain reputation</li>
+                </ul>
+            </div>
+            <div class="sidebar-card sidebar-card--neutral">
+                <h4 class="sidebar-card-title">Global Impact</h4>
+                <ul class="sidebar-list sidebar-list--compact">
+                    <li><span>64%</span> have seen fake news</li>
+                    <li><span>23%</span> shared unknowingly</li>
+                    <li><span>$78B</span> annual economic damage</li>
+                    <li><span>6×</span> faster spread than truth</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-head">
+                <h3 class="sidebar-title">Session &amp; Server Stats</h3>
+                <span class="live-indicator">
+                    <span class="live-dot"></span>
+                    LIVE
+                </span>
+            </div>
+            <div class="advanced-chart">
+                <canvas id="sidebarChart" class="viz-canvas"></canvas>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
+                        <span>Accuracy</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: linear-gradient(135deg, #10b981, #059669);"></div>
+                        <span>Precision</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: linear-gradient(135deg, #f59e0b, #d97706);"></div>
+                        <span>Recall</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-chart">
+                <div class="comparison-item">
+                    <div class="comparison-label">This Session</div>
+                    <div class="comparison-value" id="sidebarSessionCount">0</div>
+                    <div class="trend-indicator" id="sidebarSessionHint">analyses</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-label">Server Total</div>
+                    <div class="comparison-value" id="sidebarServerTotal">0</div>
+                    <div class="trend-indicator" id="sidebarServerHint">since restart</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-label">High-Conf. Tier</div>
+                    <div class="comparison-value" id="sidebarHighTierPct">0%</div>
+                    <div class="trend-indicator" id="sidebarHighTierHint">of server analyses</div>
+                </div>
+            </div>
+        </div>
+        </div><!-- .sidebar-scroll -->
+    </aside>
+
+    <div class="main-wrapper" id="mainWrapper">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">
+                <div class="brain-logo">
+                    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1">
+                                    <animate attributeName="stop-color" values="#6366f1;#8b5cf6;#ec4899;#6366f1" dur="4s" repeatCount="indefinite"/>
+                                </stop>
+                                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1">
+                                    <animate attributeName="stop-color" values="#8b5cf6;#ec4899;#6366f1;#8b5cf6" dur="4s" repeatCount="indefinite"/>
+                                </stop>
+                                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1">
+                                    <animate attributeName="stop-color" values="#ec4899;#6366f1;#8b5cf6;#ec4899" dur="4s" repeatCount="indefinite"/>
+                                </stop>
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                            <radialGradient id="nodeGlow">
+                                <stop offset="0%" style="stop-color:#fff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.8" />
+                            </radialGradient>
+                        </defs>
+                        
+                        <!-- Outer glow ring -->
+                        <circle cx="60" cy="60" r="52" fill="none" stroke="url(#brainGradient)" stroke-width="1" opacity="0.3">
+                            <animate attributeName="r" values="52;56;52" dur="3s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite"/>
+                        </circle>
+                        
+                        <!-- Enhanced brain outline with 3D effect -->
+                        <path d="M60 15 C35 15, 22 25, 22 42 C22 48, 20 54, 20 60 C20 72, 28 82, 34 88 C40 94, 47 98, 60 98 C73 98, 80 94, 86 88 C92 82, 100 72, 100 60 C100 54, 98 48, 98 42 C98 25, 85 15, 60 15 Z" 
+                              fill="url(#brainGradient)" 
+                              stroke="url(#brainGradient)" 
+                              stroke-width="3"
+                              filter="url(#glow)"
+                              opacity="0.95">
+                            <animate attributeName="opacity" values="0.95;1;0.95" dur="2s" repeatCount="indefinite"/>
+                        </path>
+                        
+                        <!-- Inner brain detail lines -->
+                        <path d="M40 35 Q45 40, 50 38 T60 35" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.6"/>
+                        <path d="M60 38 Q65 42, 70 40 T80 38" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.6"/>
+                        <path d="M35 50 Q40 55, 45 53" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5"/>
+                        <path d="M75 50 Q70 55, 65 53" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5"/>
+                        
+                        <!-- Enhanced neural network nodes with glow -->
+                        <g filter="url(#glow)">
+                            <circle cx="40" cy="35" r="4" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1">
+                                <animate attributeName="r" values="4;5.5;4" dur="2s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="60" cy="30" r="4" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1">
+                                <animate attributeName="r" values="4;5.5;4" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="80" cy="38" r="4" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1">
+                                <animate attributeName="r" values="4;5.5;4" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="35" cy="55" r="4" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1">
+                                <animate attributeName="r" values="4;5.5;4" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="60" cy="60" r="5" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1.5">
+                                <animate attributeName="r" values="5;6.5;5" dur="2s" begin="1.2s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" begin="1.2s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="85" cy="58" r="4" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1">
+                                <animate attributeName="r" values="4;5.5;4" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="45" cy="75" r="4" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1">
+                                <animate attributeName="r" values="4;5.5;4" dur="2s" begin="1.8s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" begin="1.8s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="75" cy="75" r="4" fill="url(#nodeGlow)" stroke="#fff" stroke-width="1">
+                                <animate attributeName="r" values="4;5.5;4" dur="2s" begin="2.1s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" begin="2.1s" repeatCount="indefinite"/>
+                            </circle>
+                        </g>
+                        
+                        <!-- Neural connection lines with flow animation -->
+                        <line x1="40" y1="35" x2="60" y2="30" stroke="#fff" stroke-width="1.5" opacity="0.4">
+                            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="60" y1="30" x2="80" y2="38" stroke="#fff" stroke-width="1.5" opacity="0.4">
+                            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="35" y1="55" x2="60" y2="60" stroke="#fff" stroke-width="1.5" opacity="0.4">
+                            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="60" y1="60" x2="85" y2="58" stroke="#fff" stroke-width="1.5" opacity="0.4">
+                            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="45" y1="75" x2="75" y2="75" stroke="#fff" stroke-width="1.5" opacity="0.4">
+                            <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" begin="1.2s" repeatCount="indefinite"/>
+                        </line>
+                    </svg>
+                </div>
+                <span>NeuroLex AI</span>
+            </h1>
+            <p class="subtitle">Cognitive Shield Against Digital Disinformation</p>
+            <span class="version-badge tooltip-container">
+                v3.0 | Neural Architecture with Multi-Stage Pipeline Intelligence | Powered by BERT Ensemble
+                <span class="tooltip-text">🚀 Advanced transformer-based detection with 5-stage pipeline, confidence tiering, and real-time pattern analysis</span>
+            </span>
+
+            <!-- Dashboard Metrics (live session + server stats) -->
+            <div class="dashboard-metrics">
+                <div class="metric-card gradient-card-1 wiggle-on-hover" data-tilt>
+                    <div class="metric-icon">🎯</div>
+                    <div class="metric-value" id="metricHighConf">98%</div>
+                    <div class="metric-label">High-Conf. Target</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;" id="metricHighConfHint">ensemble tier estimate</div>
+                </div>
+                <div class="metric-card gradient-card-2 wiggle-on-hover" data-tilt>
+                    <div class="metric-icon">⚡</div>
+                    <div class="metric-value" id="metricSessionCount">0</div>
+                    <div class="metric-label">Your Analyses</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;" id="metricSessionHint">this browser session</div>
+                </div>
+                <div class="metric-card gradient-card-3 wiggle-on-hover" data-tilt>
+                    <div class="metric-icon">🌍</div>
+                    <div class="metric-value">4</div>
+                    <div class="metric-label">Languages Supported</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">EN | UR | PS | HI</div>
+                </div>
+                
+                <div class="metric-card gradient-card-3 wiggle-on-hover" data-tilt>
+                    <div class="metric-icon">🧠</div>
+                    <div class="metric-value">5-Stage</div>
+                    <div class="metric-label">Pipeline Analysis</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">BERT + RoBERTa + DeBERTa</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('text')">📝 Text Analysis</button>
+            <button class="tab-btn" onclick="switchTab('url')">🔗 URL Analysis</button>
+            <button class="tab-btn" onclick="switchTab('image')">🖼️ Image Analysis</button>
+            <button class="tab-btn" onclick="switchTab('chat')">💬 AI Chat</button>
+        </div>
+
+        <!-- Text Analysis Tab -->
+        <div id="textTab" class="tab-content active">
+            <div class="glass-card">
+                <h2 class="card-title">
+                    <span class="card-icon">📝</span>
+                    Analyze Text Content
+                </h2>
+                
+                <form id="textForm">
+                    <div class="form-group">
+                        <label for="textInput">Enter text to analyze:</label>
+                        <textarea id="textInput" placeholder="Paste news article, social media post, or any text content here..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="langSelect">Language:</label>
+                        <select id="langSelect">
+                            <option value="en">English</option>
+                            <option value="ur">Urdu (اردو)</option>
+                            <option value="ps">Pashto (پښتو)</option>
+                            <option value="hi">Hindi (हिन्दी)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span id="textBtnText">🔍 Analyze Now</span>
+                        <span id="textSpinner" class="spinner hidden"></span>
+                    </button>
+                </form>
+
+                <div id="textResult" class="hidden"></div>
+
+                <!-- Content signals from API (real data only) -->
+                <div id="textContentSignals" class="hidden shap-container">
+                    <h4 style="margin-bottom: 1rem;">📊 Content Signals</h4>
+                    <div id="contentSignalsContent"></div>
+                </div>
+
+                <!-- History Section for Text -->
+                <div class="history-section" id="textHistory">
+                    <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">📜 Analysis History</h3>
+                    <div id="textHistoryList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- URL Analysis Tab -->
+        <div id="urlTab" class="tab-content">
+            <div class="glass-card">
+                <h2 class="card-title">
+                    <span class="card-icon">🔗</span>
+                    Analyze URL Content
+                </h2>
+                
+                <form id="urlForm">
+                    <div class="form-group">
+                        <label for="urlInput">Enter URL:</label>
+                        <input type="url" id="urlInput" placeholder="https://example.com/news-article" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span id="urlBtnText">🔍 Analyze URL</span>
+                        <span id="urlSpinner" class="spinner hidden"></span>
+                    </button>
+                </form>
+
+                <div id="urlResult" class="hidden"></div>
+
+                <!-- Domain Credibility Analysis -->
+                <div id="urlDomainAnalysis" class="hidden explanation">
+                    <div class="explanation-title">
+                        🌐 Domain Credibility Analysis
+                    </div>
+                    <div id="domainAnalysisContent"></div>
+                </div>
+
+                <!-- History Section for URL -->
+                <div class="history-section" id="urlHistory">
+                    <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">📜 Analysis History</h3>
+                    <div id="urlHistoryList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Analysis Tab -->
+        <div id="imageTab" class="tab-content">
+            <div class="glass-card">
+                <h2 class="card-title">
+                    <span class="card-icon">🖼️</span>
+                    Analyze Image Content
+                </h2>
+                
+                <form id="imageForm">
+                    <div class="form-group">
+                        <label for="imageInput">Upload Image:</label>
+                        <div class="file-drop-zone" onclick="document.getElementById('imageInput').click()">
+                            <input type="file" id="imageInput" accept="image/*" required>
+                            <div class="file-drop-content">
+                                <strong>Choose an image</strong>
+                                <span class="hint-text">PNG, JPG, JPEG · Max 10MB</span>
+                            </div>
+                        </div>
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span id="imageBtnText">🔍 Analyze Image</span>
+                        <span id="imageSpinner" class="spinner hidden"></span>
+                    </button>
+                </form>
+
+                <div id="imageResult" class="hidden"></div>
+
+                <!-- Image Analysis Breakdown -->
+                <div id="imageAnalysisBreakdown" class="hidden">
+                    <div class="neural-viz" id="imageNeuralViz"></div>
+                    <div class="explanation" style="margin-top: 1rem;">
+                        <div class="explanation-title">
+                            🎨 Visual Features Detected
+                        </div>
+                        <div id="imageFeatures"></div>
+                    </div>
+                </div>
+
+                <!-- History Section for Image -->
+                <div class="history-section" id="imageHistory">
+                    <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">📜 Analysis History</h3>
+                    <div id="imageHistoryList"></div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Chat Tab -->
+        <div id="chatTab" class="tab-content">
+            <div class="glass-card">
+                <h2 class="card-title">
+                    <span class="card-icon">💬</span>
+                    AI Assistant Chat
+                </h2>
+
+                <!-- Quick Questions -->
+                <div class="quick-questions">
+                    <button class="quick-question-btn" onclick="askQuestion('What is fake news?')">
+                        ❓ What is fake news?
+                    </button>
+                    <button class="quick-question-btn" onclick="askQuestion('How to verify news?')">
+                        ✓ How to verify news?
+                    </button>
+                    <button class="quick-question-btn" onclick="askQuestion('What are common signs of misinformation?')">
+                        🔍 Signs of misinformation
+                    </button>
+                    <button class="quick-question-btn" onclick="askQuestion('How does NeuroLex work?')">
+                        🧠 How does NeuroLex work?
+                    </button>
+                </div>
+                
+                <div id="chatMessages" style="min-height: 300px; max-height: 500px; overflow-y: auto; margin-bottom: 1rem; padding: 1rem; background: rgba(15, 23, 42, 0.5); border-radius: 10px;"></div>
+
+                <form id="chatForm">
+                    <div class="form-group">
+                        <input type="text" id="chatInput" placeholder="Ask about fake news detection, verification tips, or analyze content..." required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span id="chatBtnText">💬 Send Message</span>
+                        <span id="chatSpinner" class="spinner hidden"></span>
+                    </button>
+                </form>
+
+                <!-- Live Activity Feed -->
+                <div class="activity-feed" id="activityFeed">
+                    <div style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                        <p>💬 Recent chat activity will appear here</p>
+                    </div>
+                </div>
+
+                <!-- Visualization Section -->
+                <div class="chart-container">
+                    <h3 class="chart-title">📊 Analysis Visualization</h3>
+                    <canvas id="chatVizCanvas" class="viz-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+   <script src="/static/app.js?v=4.0.6" defer></script>
+</body>
+</html>
